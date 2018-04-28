@@ -98,6 +98,7 @@ switch (ENVIRONMENT)
  * Include the path if the folder is not in the same directory
  * as this file.
  */
+    // 系统脚本目录
 	$system_path = 'system';
 
 /*
@@ -113,6 +114,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
+    // 开发目录
 	$application_folder = 'application';
 
 /*
@@ -150,15 +152,19 @@ switch (ENVIRONMENT)
  *
  * Un-comment the $routing array below to use this feature
  */
+    // 系统加载时默认
 	// The directory name, relative to the "controllers" folder.  Leave blank
 	// if your controller is not in a sub-folder within the "controllers" folder
+    // 目录名
 	// $routing['directory'] = '';
 
 	// The controller class file name.  Example:  mycontroller
-	// $routing['controller'] = '';
+    // 控制器名
+    // $routing['controller'] = 'welcome';
 
 	// The controller function you wish to be called.
-	// $routing['function']	= '';
+    // 方法名
+    // $routing['function']	= 'index';
 
 
 /*
@@ -190,11 +196,22 @@ switch (ENVIRONMENT)
  */
 
 	// Set the current directory correctly for CLI requests
+    // 命令行访问
+    // $ php index.php tools message to
+    // string(22) "F:\gitTest\CodeIgniter"
+    // Hello to!
+    // 浏览器访问
+    // Hello to!
 	if (defined('STDIN'))
 	{
+	    // var_dump(dirname(__FILE__));
+        // 将执行目录改为当前文件所在目录
 		chdir(dirname(__FILE__));
 	}
 
+	// 规范化路径
+    // var_dump($system_path);           | string(6) "system"
+    // var_dump(realpath($system_path)); | string(29) "F:\gitTest\CodeIgniter\system"
 	if (($_temp = realpath($system_path)) !== FALSE)
 	{
 		$system_path = $_temp.'/';
@@ -202,6 +219,7 @@ switch (ENVIRONMENT)
 	else
 	{
 		// Ensure there's a trailing slash
+        // 删除字符串末端的空白字符
 		$system_path = rtrim($system_path, '/').'/';
 	}
 
@@ -222,6 +240,8 @@ switch (ENVIRONMENT)
 	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
 	// Path to the system folder
+    // var_dump($system_path); | string(30) "F:\gitTest\CodeIgniter\system/"
+    // var_dump(BASEPATH);     | string(30) "F:/gitTest/CodeIgniter/system/"
 	define('BASEPATH', str_replace('\\', '/', $system_path));
 
 	// Path to the front controller (this file)
@@ -281,6 +301,19 @@ switch (ENVIRONMENT)
 	}
 
 	define('VIEWPATH', $view_folder);
+
+//    echo 'ENVIRONMENT:'.ENVIRONMENT.'<br/>';
+//    echo '$system_path:'.$system_path.'<br/>';
+//    echo '$application_folder:'.$application_folder.'<br/>';
+//    echo '$system_path:'.$system_path.'<br/>';
+//    echo 'SELF:'.SELF.'<br/>';
+//    echo 'BASEPATH:'.BASEPATH.'<br/>';
+//    echo 'FCPATH:'.FCPATH.'<br/>';
+//    echo 'SYSDIR:'.SYSDIR.'<br/>';
+//    echo 'APPPATH:'.APPPATH.'<br/>';
+//    echo '$view_folder:'.$view_folder.'<br/>';
+//    echo 'VIEWPATH:'.VIEWPATH.'<br/>';
+//    die;
 
 /*
  * --------------------------------------------------------------------
